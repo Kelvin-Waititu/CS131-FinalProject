@@ -3,6 +3,8 @@ import os
 from celebrity_match_finder import CelebrityMatchFinder
 from celebrity_info import CelebrityInfoGenerator
 import numpy as np
+import sys
+import time 
 
 def resize_and_pad(img, size, pad_color=0):
     h, w = img.shape[:2]
@@ -85,6 +87,9 @@ def visualize_results(test_image_path, results):
 
 
 def main(test_image_path):
+    start_time = time.time()  # Start time before processing
+
+
     # Path to the Annoy index file that should have been previously created
     index_path = "annoy_index.ann"
     # Check if the Annoy index exists
@@ -102,6 +107,12 @@ def main(test_image_path):
 
     # Process the test image and get the results
     results = lookalike_app.process_image(test_image_path)
+
+    end_time = time.time()  # End time after processing
+
+    # Calculate and print the processing time
+    processing_time = end_time - start_time
+    print(f"Processing time: {processing_time} seconds")
 
     # Visualize the results
     visualize_results(test_image_path, results)
